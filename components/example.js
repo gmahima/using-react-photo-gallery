@@ -9,6 +9,9 @@ import tw from 'twin.macro'
 const Image = styled(motion.img) `
 position: absolute;
 max-width: 100vw;
+${props => {
+    console.log(props.imageIndex, props.src)
+}}
 `
 const Btn = styled.div `
 top: calc(50% - 20px);
@@ -39,14 +42,14 @@ ${props => {
     }
 }}
 `
-const images = [
-  "https://unsplash.it/200/200",
-  "https://unsplash.it/400/200",
-  "https://unsplash.it/200/400",
-  "https://unsplash.it/600/600",
-  "https://unsplash.it/1200/600",
-  "https://unsplash.it/640/360"
-];
+// const images = [
+//   "https://unsplash.it/200/200",
+//   "https://unsplash.it/400/200",
+//   "https://unsplash.it/200/400",
+//   "https://unsplash.it/600/600",
+//   "https://unsplash.it/1200/600",
+//   "https://unsplash.it/640/360"
+// ];
 // .example-container {
 //     width: 100vw;
 //     height: 100vh;
@@ -124,14 +127,14 @@ const variants = {
 };
 
 export const Example = ({i, photos}) => {
-    console.log(i)
-  const [[page, direction], setPage] = useState([0, 0]);
+    console.log(photos)
+  const [[page, direction], setPage] = useState([i, 0]);
 
   // We only have 3 images, but we paginate them absolutely (ie 1, 2, 3, 4, 5...) and
   // then wrap that within 0-2 to find our image ID in the array below. By passing an
   // absolute page index as the `motion` component's `key` prop, `AnimatePresence` will
   // detect it as an entirely new image. So you can infinitely paginate as few as 1 images.
-  const imageIndex = wrap(i, images.length, page);
+  const imageIndex = wrap(i, photos.length, page);
 
   const paginate = (newDirection) => {
     setPage([page + newDirection, newDirection]);
@@ -142,7 +145,8 @@ export const Example = ({i, photos}) => {
       <AnimatePresence initial={false} custom={direction}>
         <Image
           key={page}
-          src={images[imageIndex]}
+          imageIndex={imageIndex}
+          src={photos[imageIndex].src}
           custom={direction}
           variants={variants}
           initial="enter"
