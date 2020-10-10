@@ -1,8 +1,6 @@
-import React, {useState, useCallback, useEffect} from 'react'
+import React, {useState, useCallback} from 'react'
 import styled from 'styled-components'
 import tw from 'twin.macro'
-import Gallery from 'react-photo-gallery'
-import Carousel, { Modal, ModalGateway } from "react-images";
 import Example from '../components/example'
 const Container = styled.div`
 ${tw `
@@ -15,6 +13,12 @@ ${tw `
  grid grid-cols-4 gap-2 items-center justify-center
 
 `}
+`
+const Modal = styled.div `
+${tw `z-50 top-0 left-0 w-full h-full fixed flex flex-col justify-center items-center bg-black bg-opacity-90`}
+`
+const Header = styled.div `
+${tw `mb-auto text-white mt-4 sm:mt-8 sm:ml-auto sm:mr-8`}
 `
 const ExampleContainer = styled.div `
 
@@ -99,17 +103,15 @@ export default function App() {
         })
         }
       </GalleryContainer>
-      <ModalGateway>
         {viewerIsOpen ? (
-          <Modal onClose={closeLightbox}>
+          <Modal>
             <ExampleContainer>
-              <button onClick={closeLightbox} css={tw `border text-white bg-red-500 self-start ml-auto`}>X</button>
+              <Header><button onClick={closeLightbox} css={tw `h-12 w-12 flex items-center justify-center bg-white rounded-full text-gray-900 font-semibold`}>X</button></Header>
               <Example i={currentImage} photos={photos}/>
             </ExampleContainer>
             
           </Modal>
         ) : null}
-      </ModalGateway>
     </Container>
   );
 }
