@@ -123,7 +123,7 @@ const variants = {
   }
 };
 
-export const Example = ({i}) => {
+export const Example = ({i, photos}) => {
     console.log(i)
   const [[page, direction], setPage] = useState([0, 0]);
 

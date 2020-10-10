@@ -11,7 +11,9 @@ ${tw `
 `
 const GalleryContainer = styled.div`
 ${tw `
- bg-gray-200 p-12 h-80 overflow-hidden overflow-y-auto overscroll-none
+ bg-white p-12 h-80 overflow-hidden overflow-y-auto overscroll-none
+ grid grid-cols-4 gap-2 items-center justify-center
+
 `}
 `
 const ExampleContainer = styled.div `
@@ -72,7 +74,7 @@ export default function App() {
   const [currentImage, setCurrentImage] = useState(0);
   const [viewerIsOpen, setViewerIsOpen] = useState(false);
 
-  const openLightbox = useCallback((event, {photo, index}) => {
+  const openLightbox = useCallback((index) => {
     console.log(index)
     setCurrentImage(index);
     setViewerIsOpen(true)
@@ -85,15 +87,24 @@ export default function App() {
 
   return (
     <Container>
-      <GalleryContainer>
-        <Gallery photos={photos} onClick={openLightbox} renderImage={(props) => {return (<Image {...props } handleClick={openLightbox}/>)}}/>
+      <GalleryContainer >
+        {/* <Gallery photos={photos} onClick={openLightbox} renderImage={(props) => {return (<Image {...props } handleClick={openLightbox}/>)}}/> */}
+        {
+        photos.map((p,i) => {
+          return (
+            <div key={p.key} css={tw `flex items-center justify-center bg-gray-200 w-full h-full p-8`}>
+              <img src={p.src} onClick={(e) => (openLightbox(i))}></img>
+            </div>
+          )
+        })
+        }
       </GalleryContainer>
       <ModalGateway>
         {viewerIsOpen ? (
           <Modal onClose={closeLightbox}>
             <ExampleContainer>
               <button onClick={closeLightbox} css={tw `border text-white bg-red-500 self-start ml-auto`}>X</button>
-              <Example i={currentImage} />
+              <Example i={currentImage} photos={photos}/>
             </ExampleContainer>
             
           </Modal>
