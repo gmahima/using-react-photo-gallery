@@ -76,10 +76,7 @@ export default function App() {
     <Container>
       <GalleryContainer>
         <Gallery photos={photos} onClick={openLightbox} renderImage={(props) => {return (<Image {...props } handleClick={openLightbox}/>)}}/>
-          </GalleryContainer>
-        <GalleryContainer>
-      <Gallery photos={photos}/>
-    </GalleryContainer>
+      </GalleryContainer>
 
       
       <ModalGateway>
